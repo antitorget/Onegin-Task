@@ -25,7 +25,10 @@
 
 ## Функции:
   ### `File_Open`
-  char* File_Open(size_t* num_symbols);                                       - открывает файл, сохраняет структуру, создает буффер, хранящий текст, и возвращает его.
+  ```c
+  char* File_Open(size_t* num_symbols);
+  Открывает файл, сохраняет структуру, создает буффер, хранящий текст, и возвращает его.
+
   int Strings_Count(char* buffer, size_t num_symbols);                        - подсчитывает количество строк в тексте.
   char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings); - cоздает массив строк и возвращает его.
   char* Get_String(char** index, int num, int count_of_strings);              - Проверяет выход за пределы массива строк и возвращает его num элемент.
