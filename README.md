@@ -33,6 +33,27 @@
 
   ---
 
-  int Strings_Count(char* buffer, size_t num_symbols);                        - подсчитывает количество строк в тексте.
-  char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings); - cоздает массив строк и возвращает его.
-  char* Get_String(char** index, int num, int count_of_strings);              - Проверяет выход за пределы массива строк и возвращает его num элемент.
+  ### `Strings_Count`
+  ```c
+  int Strings_Count(char* buffer, size_t num_symbols);
+  ```
+  
+  Подсчитывает количество строк в тексте.
+
+  ---
+
+  ### `Strings_Arr`
+  ```c
+  char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings);
+  ```
+
+  Создает массив строк и возвращает его.
+
+  ---
+
+  ### `Get_String`
+  ```c
+  char* Get_String(char** index, int num, int count_of_strings);
+  ```
+
+  Проверяет выход за пределы массива строк и возвращает его num элемент.
