@@ -21,7 +21,7 @@ char* File_Open(size_t* num_symbols)
     stat("onegin_orig.txt", &text);
 
     *num_symbols = (size_t)(text.st_size + 1);
-    char* buffer = (char*)calloc(*num_symbols, 1);
+    char* buffer = (char*)calloc(*num_symbols, sizeof(char));
 
     fread(buffer, sizeof(buffer[0]), *num_symbols, onegin);
     fclose(onegin);
