@@ -27,7 +27,11 @@
   ### `File_Open`
   ```c
   char* File_Open(size_t* num_symbols);
+  ```
+
   Открывает файл, сохраняет структуру, создает буффер, хранящий текст, и возвращает его.
+
+  ---
 
   int Strings_Count(char* buffer, size_t num_symbols);                        - подсчитывает количество строк в тексте.
   char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings); - cоздает массив строк и возвращает его.
