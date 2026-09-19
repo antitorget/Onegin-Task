@@ -9,7 +9,7 @@ int main()
 
     char** index = Strings_Arr(buffer, num_symbols, count_of_strings);
 
-    printf("%s", Get_String(index, 0, count_of_strings));
+    printf("%s", Get_String(index, 1, count_of_strings));
 }
 
 char* File_Open(size_t* num_symbols)
