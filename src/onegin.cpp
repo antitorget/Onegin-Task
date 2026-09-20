@@ -3,7 +3,7 @@
 int main()
 {
     size_t num_symbols = 0;
-    char* buffer = File_Open(&num_symbols);
+    char* buffer = Get_Text_From_File(&num_symbols);
 
     int count_of_strings = Strings_Count(buffer, num_symbols);
 
@@ -12,13 +12,13 @@ int main()
     printf("%s", Get_String(index, 0, count_of_strings));
 }
 
-char* File_Open(size_t* num_symbols)
+char* Get_Text_From_File(size_t* num_symbols)
 {
     assert(num_symbols != NULL);
 
-    FILE* onegin = fopen("onegin_orig.txt", "r");
+    FILE* onegin = fopen("data/onegin_orig.txt", "r");
     struct stat text = {};
-    stat("onegin_orig.txt", &text);
+    stat("data/onegin_orig.txt", &text);
 
     *num_symbols = (size_t)(text.st_size + 1);
     char* buffer = (char*)calloc(*num_symbols, sizeof(char));
