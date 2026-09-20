@@ -27,9 +27,9 @@
 
 ## Функции:
 
-  ### `File_Open`
+  ### `Get_Text_From_File`
   ```c
-  char* File_Open(size_t* num_symbols);
+  char* Get_Text_From_File(size_t* num_symbols);
   ```
   **Тип:** `char*`
   
