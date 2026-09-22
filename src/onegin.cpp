@@ -1,34 +1,46 @@
 #include "onegin.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     size_t num_symbols = 0;
-    char* buffer = Get_Text_From_File(&num_symbols);
+    char* buffer = Get_Text_From_File(argv, &num_symbols);
 
     int count_of_strings = Strings_Count(buffer, num_symbols);
 
     char** index = Strings_Arr(buffer, num_symbols, count_of_strings);
 
     qsort(index, (size_t)count_of_strings, sizeof(*index), Compare_For_ABC);
-
-    Create_Onegin_File(index, count_of_strings);
+    
+    Create_Onegin_File(index, count_of_strings); //TODO: unsort text output
+    
+    free(buffer);
+    free(index);
 }
 
-char* Get_Text_From_File(size_t* num_symbols)
+char* Get_Text_From_File(char* argv[], size_t* num_symbols)
 {
     assert(num_symbols != NULL);
 
-    FILE* onegin = fopen("data/onegin_orig.txt", "r");
-    struct stat text = {};
-    stat("data/onegin_orig.txt", &text);
+    FILE* onegin = fopen(argv[1], "r");
+    assert(onegin != NULL);
 
-    *num_symbols = (size_t)(text.st_size + 1);
+    *num_symbols = Get_File_Size(argv);
     char* buffer = (char*)calloc(*num_symbols, sizeof(char));
 
     fread(buffer, sizeof(buffer[0]), *num_symbols, onegin);
     fclose(onegin);
 
     return buffer;
+}
+
+size_t Get_File_Size(char* argv[])
+{
+    assert(argv != NULL);
+
+    struct stat text = {};
+    stat(argv[1], &text);
+    
+    return (size_t)text.st_size + 1;
 }
 
 int Strings_Count(char* buffer, size_t num_symbols)
@@ -82,6 +94,9 @@ char* Get_String(char** index, int num, int count_of_strings)
 
 int Compare_For_ABC(const void* a, const void* b)
 {
+    assert(a != NULL);
+    assert(b != NULL);
+    
     const char* s1 = *(char* const*)a;
     const char* s2 = *(char* const*)b;
 
@@ -110,6 +125,8 @@ int Compare_For_ABC(const void* a, const void* b)
 
 void Create_Onegin_File(char** index, int count_of_strings)
 {
+    assert(index != NULL);
+
     const char* Sorted_Onegin = "onegin_sorted.txt";
 
     FILE *file = fopen(Sorted_Onegin, "w");
@@ -121,6 +138,7 @@ void Create_Onegin_File(char** index, int count_of_strings)
             fputs(index[i], file);
             fputs("\n", file);
         }
+
         fclose(file);
         printf("File was created");
     }
