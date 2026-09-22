@@ -11,11 +11,7 @@ int main()
 
     qsort(index, (size_t)count_of_strings, sizeof(*index), Compare_For_ABC);
 
-    for(int i = 0; i < count_of_strings; i++)
-    {
-        printf("%s\n", Get_String(index, i, count_of_strings));
-    }
-
+    Create_Onegin_File(index, count_of_strings);
 }
 
 char* Get_Text_From_File(size_t* num_symbols)
@@ -109,5 +105,26 @@ int Compare_For_ABC(const void* a, const void* b)
 
         s1++;
         s2++;
+    }
+}
+
+void Create_Onegin_File(char** index, int count_of_strings)
+{
+    const char* Sorted_Onegin = "onegin_sorted.txt";
+
+    FILE *file = fopen(Sorted_Onegin, "w");
+    
+    if(file)
+    {
+        for(int i = 0; i < count_of_strings; i++)
+        {
+            fputs(index[i], file);
+            fputs("\n", file);
+        }
+        fclose(file);
+        printf("File was created");
+    }
+    else{
+        printf("File cant be created");
     }
 }
