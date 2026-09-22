@@ -3,7 +3,7 @@
 int main(int argc, char *argv[])
 {
     size_t num_symbols = 0;
-    char* buffer = Get_Text_From_File(argv, &num_symbols);
+    char* buffer = Get_Text_From_File(argc, argv, &num_symbols);
 
     int count_of_strings = Strings_Count(buffer, num_symbols);
 
@@ -11,15 +11,21 @@ int main(int argc, char *argv[])
 
     qsort(index, (size_t)count_of_strings, sizeof(*index), Compare_For_ABC);
     
-    Create_Onegin_File(index, count_of_strings); //TODO: unsort text output
+    Create_Onegin_File(index, count_of_strings);
     
     free(buffer);
     free(index);
 }
 
-char* Get_Text_From_File(char* argv[], size_t* num_symbols)
+char* Get_Text_From_File(int argc, char* argv[], size_t* num_symbols)
 {
     assert(num_symbols != NULL);
+    assert(argv != NULL);
+
+    if(argc != 2)
+    {
+        printf("Input file...\n\n");
+    }
 
     FILE* onegin = fopen(argv[1], "r");
     assert(onegin != NULL);
@@ -82,16 +88,6 @@ char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings)
     return index;
 }
 
-char* Get_String(char** index, int num, int count_of_strings)
-{
-    assert(index != NULL);
-    assert(num <= count_of_strings);
-    assert(num >= 0);
-    
-    return index[num];
-    
-}
-
 int Compare_For_ABC(const void* a, const void* b)
 {
     assert(a != NULL);
@@ -139,10 +135,64 @@ void Create_Onegin_File(char** index, int count_of_strings)
             fputs("\n", file);
         }
 
+        Restore_Index(index, count_of_strings);
+        for(int i = 0; i < count_of_strings; i++)
+        {
+            fputs(index[i], file);
+            fputs("\n", file);
+        }
         fclose(file);
         printf("File was created");
     }
     else{
         printf("File cant be created");
     }
+}
+
+void Restore_Index(char** index, int count_of_strings)
+{
+    assert(index != NULL);
+    assert(count_of_strings >= 0);
+
+    for(int nPass = 1; nPass < count_of_strings; nPass++)
+    {
+        int swapped = 0;
+
+        for(int i = 0; i < count_of_strings - nPass; i++)
+        {
+            if(index[i] > index[i + 1])
+            {
+                ValueChange(&index[i], &index[i + 1]);
+                swapped = 1;
+            }
+        }
+
+        if(swapped == 0)
+        {
+            break;
+        }
+
+    }
+}
+
+void ValueChange(char** value1, char** value2)
+{
+    assert(value1 != value2);
+    assert(value1 != NULL);
+    assert(value2 != NULL);
+
+    char* midValue = *value1;
+
+    *value1 = *value2;
+    *value2 = midValue;
+}
+
+
+char* Get_String(char** index, int num, int count_of_strings)
+{
+    assert(index != NULL);
+    assert(num <= count_of_strings);
+    assert(num >= 0);
+    
+    return index[num]; 
 }

@@ -5,10 +5,12 @@
 #include <assert.h>
 #include <ctype.h>
 
-char* Get_Text_From_File(char* argv[], size_t* num_symbols);
+char* Get_Text_From_File(int argc, char* argv[], size_t* num_symbols);
 int Strings_Count(char* buffer, size_t num_symbols);
 char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings);
 char* Get_String(char** index, int num, int count_of_strings);
 int Compare_For_ABC(const void* a, const void* b);
 void Create_Onegin_File(char** index, int count_of_strings);
 size_t Get_File_Size(char* argv[]);
+void Restore_Index(char** index, int count_of_strings);
+void ValueChange(char** value1, char** value2);
