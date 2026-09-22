@@ -88,13 +88,13 @@ char** Strings_Arr(char* buffer, size_t num_symbols, int count_of_strings)
     return index;
 }
 
-int Compare_For_ABC(const void* a, const void* b)
+int Compare_For_ABC(const void* left_comp_elem, const void* right_comp_elem)
 {
-    assert(a != NULL);
-    assert(b != NULL);
+    assert(left_comp_elem != NULL);
+    assert(right_comp_elem != NULL);
     
-    const char* s1 = *(char* const*)a;
-    const char* s2 = *(char* const*)b;
+    const char* s1 = *(char* const*)left_comp_elem;
+    const char* s2 = *(char* const*)right_comp_elem;
 
     while(*s1 != '\0' && !isalpha((unsigned char)*s1))
     {
@@ -125,23 +125,23 @@ void Create_Onegin_File(char** index, int count_of_strings)
 
     const char* Sorted_Onegin = "onegin_sorted.txt";
 
-    FILE *file = fopen(Sorted_Onegin, "w");
+    FILE* onegin_sort = fopen(Sorted_Onegin, "w");
     
-    if(file)
+    if(onegin_sort)
     {
         for(int i = 0; i < count_of_strings; i++)
         {
-            fputs(index[i], file);
-            fputs("\n", file);
+            fputs(index[i], onegin_sort);
+            fputs("\n", onegin_sort);
         }
 
         Restore_Index(index, count_of_strings);
         for(int i = 0; i < count_of_strings; i++)
         {
-            fputs(index[i], file);
-            fputs("\n", file);
+            fputs(index[i], onegin_sort);
+            fputs("\n", onegin_sort);
         }
-        fclose(file);
+        fclose(onegin_sort);
         printf("File was created");
     }
     else{
@@ -158,11 +158,11 @@ void Restore_Index(char** index, int count_of_strings)
     {
         int swapped = 0;
 
-        for(int i = 0; i < count_of_strings - nPass; i++)
+        for(int num_elem = 0; num_elem < count_of_strings - nPass; num_elem++)
         {
-            if(index[i] > index[i + 1])
+            if(index[num_elem] > index[num_elem + 1])
             {
-                ValueChange(&index[i], &index[i + 1]);
+                ValueChange(&index[num_elem], &index[num_elem + 1]);
                 swapped = 1;
             }
         }
