@@ -9,7 +9,13 @@ int main()
 
     char** index = Strings_Arr(buffer, num_symbols, count_of_strings);
 
-    printf("%s", Get_String(index, 0, count_of_strings));
+    qsort(index, (size_t)count_of_strings, sizeof(*index), Compare_For_ABC);
+
+    for(int i = 0; i < count_of_strings; i++)
+    {
+        printf("%s\n", Get_String(index, i, count_of_strings));
+    }
+
 }
 
 char* Get_Text_From_File(size_t* num_symbols)
@@ -75,4 +81,33 @@ char* Get_String(char** index, int num, int count_of_strings)
     assert(num >= 0);
     
     return index[num];
+    
+}
+
+int Compare_For_ABC(const void* a, const void* b)
+{
+    const char* s1 = *(char* const*)a;
+    const char* s2 = *(char* const*)b;
+
+    while(*s1 != '\0' && !isalpha((unsigned char)*s1))
+    {
+        s1++;
+    }
+    while(*s2 != '\0' && !isalpha((unsigned char)*s2))
+    {
+        s2++;
+    }
+
+    while(1)
+    {
+        int c1 = tolower((unsigned char)*s1);
+        int c2 = tolower((unsigned char)*s2);
+
+        if(c1 < c2) return -1;
+        if(c1 > c2) return 1;
+        if(c1 == '\0') return 0;
+
+        s1++;
+        s2++;
+    }
 }
